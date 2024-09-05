@@ -24,11 +24,11 @@ A continuación, se detalla el esquema de la base de datos, incluyendo las tabla
 ### Tablas
 
 1. **Usuario**
-   - `id_usuario` (INT, AUTO_INCREMENT, PRIMARY KEY): Identificador único del usuario.
-   - `nombre` (VARCHAR(50), NOT NULL): Nombre del usuario.
-   - `email` (VARCHAR(100), UNIQUE, NOT NULL): Dirección de correo electrónico del usuario.
-   - `password` (VARCHAR(255), NOT NULL): Contraseña del usuario.
-   - `fecha_creacion` (TIMESTAMP, DEFAULT CURRENT_TIMESTAMP): Fecha y hora en que se creó el registro del usuario.
+   - **id_usuario** (INT, AUTO_INCREMENT, PRIMARY KEY): Identificador único del usuario.
+   - **nombre` (VARCHAR(50), NOT NULL): Nombre del usuario.
+   - **email` (VARCHAR(100), UNIQUE, NOT NULL): Dirección de correo electrónico del usuario.
+   - **password** (VARCHAR(255), NOT NULL): Contraseña del usuario.
+   - **fecha_creacion** (TIMESTAMP, DEFAULT CURRENT_TIMESTAMP): Fecha y hora en que se creó el registro del usuario.
 
    ```sql
    CREATE TABLE Usuario (
@@ -51,20 +51,19 @@ La tabla `Tareas` almacena la información relacionada con las tareas individual
 - **etiquetas** (VARCHAR(255)): Etiquetas asociadas a la tarea para facilitar la búsqueda y clasificación.
 - **estado** (BOOLEAN, DEFAULT 0): Estado de la tarea (0: no completada, 1: completada).
 
-```sql
-CREATE TABLE Tareas (
-    id_tarea INT AUTO_INCREMENT PRIMARY KEY,
-    descripcion_tarea TEXT NOT NULL,
-    id_lista INT,
-    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    fecha_vencimiento DATE,
-    prioridad ENUM('1', '2', '3') NOT NULL, -- 1: baja, 2: media, 3: alta
-    etiquetas VARCHAR(255),
-    estado BOOLEAN DEFAULT 0, -- 0: no completada, 1: completada
-    FOREIGN KEY (id_lista) REFERENCES Lista_Tareas(id_lista)
-);
-
-## Historial de Cambios
+   ```sql
+   CREATE TABLE Tareas (
+       id_tarea INT AUTO_INCREMENT PRIMARY KEY,
+       descripcion_tarea TEXT NOT NULL,
+       id_lista INT,
+       fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+       fecha_vencimiento DATE,
+       prioridad ENUM('1', '2', '3') NOT NULL, -- 1: baja, 2: media, 3: alta
+       etiquetas VARCHAR(255),
+       estado BOOLEAN DEFAULT 0, -- 0: no completada, 1: completada
+       FOREIGN KEY (id_lista) REFERENCES Lista_Tareas(id_lista)
+   );
+## **Historial de Cambios**
 
 La tabla `Historial_Cambios` registra las acciones realizadas sobre las tareas, permitiendo un seguimiento detallado de las modificaciones. A continuación se detallan los campos y su propósito:
 
@@ -74,16 +73,16 @@ La tabla `Historial_Cambios` registra las acciones realizadas sobre las tareas, 
 - **accion_realizada** (ENUM('crear', 'modificar', 'eliminar', 'completar'), NOT NULL): Tipo de acción realizada sobre la tarea.
 - **fecha_accion** (TIMESTAMP, DEFAULT CURRENT_TIMESTAMP): Fecha y hora en que se realizó la acción.
 
-```sql
-CREATE TABLE Historial_Cambios (
-    id_historial INT AUTO_INCREMENT PRIMARY KEY,
-    id_tarea INT,
-    id_usuario INT,
-    accion_realizada ENUM('crear', 'modificar', 'eliminar', 'completar') NOT NULL,
-    fecha_accion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_tarea) REFERENCES Tareas(id_tarea),
-    FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario)
-);
+   ```sql
+   CREATE TABLE Historial_Cambios (
+       id_historial INT AUTO_INCREMENT PRIMARY KEY,
+       id_tarea INT,
+       id_usuario INT,
+       accion_realizada ENUM('crear', 'modificar', 'eliminar', 'completar') NOT NULL,
+       fecha_accion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+       FOREIGN KEY (id_tarea) REFERENCES Tareas(id_tarea),
+       FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario)
+   );
 ## Relaciones entre Tablas
 
 El esquema de la base de datos está diseñado para reflejar las siguientes relaciones entre las tablas:
